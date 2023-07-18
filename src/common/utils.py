@@ -1,4 +1,4 @@
-from models import ExchangeRate
+from src.models.models import ExchangeRate
 
 
 def get_rate_and_currency():
