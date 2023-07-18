@@ -1,13 +1,11 @@
 import json
-from datetime import datetime
 
-from apscheduler.schedulers.background import BackgroundScheduler
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 
-from manage import app, scheduler
-from models import ExchangeRate
+from src.manage import app, scheduler
+from src.models.models import ExchangeRate
 
 
 @app.route("/")
@@ -39,6 +37,10 @@ def compare_rates():
 
 
 def update_latest_rates():
+    """
+    A scheduled task that runs everyday at 16:00 CET time to update the currency rates.
+    :return:
+    """
     with app.app_context():
         path = Service('/usr/bin/chromium-browser/chromedriver.exe')
         driver = webdriver.Chrome(service=path)
@@ -68,6 +70,6 @@ def update_latest_rates():
 
 if __name__ == '__main__':
     scheduler.add_job(id='ScheduledTask', func=update_latest_rates, max_instances=1, trigger="cron",
-                      day='*', hour=16, timezone='CET')
+                      day='*', hour=16, second=45, timezone='CET')
     scheduler.start()
     app.run(host="127.0.0.1", port="5000", debug=True, use_reloader=False)

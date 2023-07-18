@@ -1,8 +1,9 @@
 from typing import List
 
-from manage import db
-from sqlalchemy.sql import func
 from sqlalchemy.dialects.postgresql import insert
+from sqlalchemy.sql import func
+
+from src.manage import db
 
 
 class ExchangeRate(db.Model):
@@ -42,7 +43,7 @@ class ExchangeRate(db.Model):
 
     @staticmethod
     def bulk_update():
-        from utils import get_rate_and_currency
+        from src.common.utils import get_rate_and_currency
 
         currency_id_rate_mapping = get_rate_and_currency()
         db.session.bulk_update_mappings(ExchangeRate, currency_id_rate_mapping)
