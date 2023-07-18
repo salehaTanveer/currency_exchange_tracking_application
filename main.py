@@ -5,7 +5,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 
 from src.manage import app, scheduler
-from src.models.models import ExchangeRate
+from src.models.exchange_rate_model import ExchangeRate
 
 
 @app.route("/")
