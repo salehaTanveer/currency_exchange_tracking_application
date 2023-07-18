@@ -33,12 +33,15 @@ class ExchangeRate(db.Model):
         }
 
     def to_json_comparison(self):
+        from src.common.utils import generate_comparison_comments
+
         return {
             "currency": self.currency,
             "currency_abr": self.currency_abr,
             "rate_today": self.new_rate,
             "rate_yesterday": self.old_rate,
-            "updated": self.updated,
+            "updated_at": self.updated,
+            "comments": generate_comparison_comments(self.old_rate, self.new_rate)
         }
 
     @staticmethod
